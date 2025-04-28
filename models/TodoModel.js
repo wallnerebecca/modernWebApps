@@ -12,7 +12,7 @@ class TodoModel {
         });
     }
 
-    toggle(id){
+    toggleTodo(id){
         this.todos.value = this.todos.value.map(todo => {
             if(todo.id == id){
                 todo.completed = !todo.completed;
@@ -21,7 +21,7 @@ class TodoModel {
         });
     }
 
-    add(todoText){
+    addTodo(todoText){
         const todo = {
             id: new Date().getTime(),
             text: todoText,
@@ -30,7 +30,7 @@ class TodoModel {
         this.todos.value = [...this.todos.value, todo];
     }
 
-    remove(id){
+    removeTodo(id){
         this.todos.value = this.todos.value.filter(todo => todo.id != id);
     }
 }

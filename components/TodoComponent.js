@@ -1,5 +1,6 @@
 "use strict";
 import KWM_Component from '../core/kwm-component.js';
+import KWM_Computed from '../core/kwm-computed.js';
 import KWM_Observable from '../core/kwm-observable.js';
 import { todoModelInstance } from '../models/TodoModel.js';
 
@@ -10,42 +11,80 @@ export default class TodoComponent extends KWM_Component {
         this.todos = todoModelInstance.todos;
         this.newTodoText = new KWM_Observable('');
 
-        this.registerRenderDependencies([todoModelInstance.todos]);
+        this.openTodos = new KWM_Computed(() => {
+            return this.todos.value.filter(todo => !todo.completed);
+        }, [this.todos]);
+
+        this.closedTodos = new KWM_Computed(() => {
+            return this.todos.value.filter(todo => todo.completed);
+        }, [this.todos]);
+
+        this.todos.subscribe(() => this.render());
     }
 
     addTodo() {
         if (this.newTodoText.value.trim() !== '') {
-            todoModelInstance.add(this.newTodoText.value);
-            this.newTodoText.value = '';
+            todoModelInstance.addTodo(this.newTodoText.value);
         }
+        this.newTodoText.value = '';
     }
 
-    removeTodo(event) {
-        const todoId = event.target.dataset.id;
-        todoModelInstance.remove(todoId);
+    removeTodo(todoId) {
+        todoModelInstance.removeTodo(todoId);
     }
 
-    toggleTodo(event) {
-        const todoId = event.target.dataset.id;
-        todoModelInstance.toggle(todoId);
+    toggleTodo(todoId) {
+        todoModelInstance.toggleTodo(todoId);
     }
 
     template() {
-        return /*html*/`
-            <section id="todo_app">
-                <h1>KWMJS Todo App</h1>
-                <input type="text" kwm-bind-value="newTodoText" />
-                <button kwm-listen-click="addTodo">Add Todo</button>
+        return `
+            <div>
+                <h2>Todo List</h2>
+
+                <label for="newTodoText">New todo</label>
+                <div class="input-group">
+                    <input kwm-model-value="this.newTodoText" id="newTodoText" placeholder="New todo text" type="text" />
+                    <button kwm-listen-click="this.addTodo()">Add Todo</button>
+                </div>
+                <h3>Open Todos (${this.openTodos.value?.length})</h3>
                 <ul>
-                    ${this.todos.value.map(todo => /*html*/`
+                    ${this.openTodos.value.map(todo => `
                         <li>
-                            <input type="checkbox" kwm-listen-click="toggleTodo" data-id="${todo.id}" ${todo.completed ? 'checked' : ''} />
-                            <span class="${todo.completed ? 'done' : ''}">${todo.text}</span>
-                            <button kwm-listen-click="removeTodo" data-id="${todo.id}">Remove</button>
+                            <input id="todo-${todo.id}" kwm-listen-click="this.toggleTodo(${todo.id})" type="checkbox" ${todo.completed ? 'checked' : '' } />
+                            <span class="${todo.completed ? 'completed' : ''}">
+                                ${todo.text}
+                            </span>
+                            <button class="bg-red" kwm-listen-click="this.removeTodo(${todo.id})" aria-label="Remove Todo" title="Remove Todo">
+                                <img src="delete-icon.svg" width="16" height="16" />
+                            </button>
                         </li>
                     `).join('')}
-                </ul>
-            </section>
+
+                    </ul>
+                ${this.openTodos.value?.length == 0 ? '<div>No open todos</div>': ''}
+
+                <h3>Closed Todos (${this.closedTodos.value?.length})</h3>
+                <ul>
+                    ${this.closedTodos.value.map(todo => `
+                        <li>
+                            <input id="todo-${todo.id}" 
+                                kwm-listen-click="this.toggleTodo(${todo.id})" 
+                                type="checkbox" 
+                                ${todo.completed ? 'checked' : '' } />
+                            <span class="${todo.completed ? 'completed' : ''}">
+                                ${todo.text}
+                            </span>
+                            <button class="bg-red" kwm-listen-click="this.removeTodo(${todo.id})" aria-label="Remove Todo" title="Remove Todo">
+                                <img src="delete-icon.svg" width="16" height="16" />
+                            </button>
+                        </li>
+                    `).join('')}
+
+                    </ul>
+                    ${this.closedTodos.value?.length == 0 ? '<div>No closed todos</div>': ''}
+
+            </div>
         `;
     }
 }

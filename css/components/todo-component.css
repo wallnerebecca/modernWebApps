@@ -1,0 +1,76 @@
+
+todo-component {
+    > div {
+        max-width: 500px;
+    }
+
+    h1, h2, h3, button, label {
+        font-family: "Lilita One", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    input[type=text],
+    button {
+        border: 1px solid lightgray;
+    }
+
+    input {
+        display: inline-block;
+    }
+
+    .input-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+
+        input {
+            flex-grow: 1;
+        }
+
+        button {
+            margin-left: 10px;
+            margin-right: 0;
+            background-color: rgb(245, 217, 59);
+            color: black;
+        }
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+
+        .bg-red {
+            background-color: rgb(187, 93, 93);
+        }
+
+        li {
+            margin-bottom: 5px;
+            margin-left: 0;
+            margin-right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px;
+            border: 1px solid lightgray;
+            border-radius: 0.5em;
+
+            span {
+                flex-grow: 1;
+                margin-left: 5px;
+                font-size: 18px;
+            }
+
+            .completed {
+                text-decoration: line-through;
+            }
+
+            button {
+                border: none;
+                margin: 0;
+                display: inline-block;
+            }
+        }
+    }
+}

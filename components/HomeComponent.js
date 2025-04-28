@@ -12,26 +12,26 @@ export default class HomeComponent extends KWM_Component {
     super();
 
     // Any component data goes here in the constructor
-    this.text = "Welcome Welcome HOME my friend 🥳";
+    this.text = "Welcome HOME my friend 🥳";
 
     this.heroList = [
       {
         heading: "Our Products",
         text: "From Laptops to Perfumes we got it all!",
         link: "#/shop",
-        img: "https://source.unsplash.com/random/1920x1080?shop,online,store",
+        img: "https://picsum.photos/seed/laptop/1080/1920",
       },
       {
         heading: "AI Chat",
         text: "Chat with yur personal AI assistant",
         link: "#/chat",
-        img: "https://source.unsplash.com/random/1920x1080?ai,bot,robot",
+        img: "https://picsum.photos/seed/chat/1080/1920",
       },
       {
         heading: "Todo App",
         text: "Manage your personal Todos",
         link: "#/todo",
-        img: "https://source.unsplash.com/random/1920x1080?workspace,notebook",
+        img: "https://picsum.photos/seed/todo/1080/1920",
       },
     ];
   }
@@ -50,7 +50,7 @@ export default class HomeComponent extends KWM_Component {
             <!-- Child Components -->
             <hero-teaser-component></hero-teaser-component>
             <hero-teaser-component 
-                background-image="https://source.unsplash.com/random/1920x1080?toast,coffee"
+                background-image="https://picsum.photos/seed/example/1080/1920"
                 text="I am a custom value for the Hero-Text"
                 heading="Wanna have it?">
             </hero-teaser-component>

@@ -1,5 +1,6 @@
 /* This is the main styles sheet - it imports all the others */
 
 @import "css/layout.css";
-@import "css/components/hero-teaser.css";
-@import "css/components/not-found.css";
+@import "css/components/hero-teaser-component.css";
+@import "css/components/not-found-component.css";
+@import "css/components/todo-component.css";
