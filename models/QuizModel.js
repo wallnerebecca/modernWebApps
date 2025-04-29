@@ -1,6 +1,6 @@
 import KWM_Observable from "../core/kwm-observable.js";
 
-// https://open-trivia-api.onrender.com/question?limit=1&categories=entertainment&tpye=true_false - GET
+// https://open-trivia-api.onrender.com/question?limit=1&categories=entertainment&type=true_false - GET
 // [
 //     {
 //         "id": 182,

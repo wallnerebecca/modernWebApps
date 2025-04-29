@@ -1,7 +1,7 @@
 // tests/QuizModel.test.js
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { quizModelInstance } from '../src/models/QuizModel.js';
+import { quizModelInstance } from '../models/QuizModel.js';
 
 describe('QuizModel', () => {
   let QuizModelClass;
@@ -17,13 +17,13 @@ describe('QuizModel', () => {
     // Create new model
     model = new QuizModelClass();
     // Mock fetch
-    originalFetch = global.fetch;
-    global.fetch = vi.fn();
+    originalFetch = window.fetch;
+    window.fetch = vi.fn();
   });
 
   afterEach(() => {
     // Restore fetch
-    global.fetch = originalFetch;
+    window.fetch = originalFetch;
     vi.restoreAllMocks();
   });
 

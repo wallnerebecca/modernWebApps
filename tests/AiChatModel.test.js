@@ -1,7 +1,7 @@
 // tests/AiChatModel.test.js
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { aiChatModelInstance } from '../src/models/AiChatModel.js';
+import { aiChatModelInstance } from '../models/AiChatModel.js';
 
 describe('AiChatModel', () => {
   let AiChatModel;
@@ -16,7 +16,7 @@ describe('AiChatModel', () => {
     model = new AiChatModel();
 
     // Mock fetch globally
-    global.fetch = vi.fn();
+    window.fetch = vi.fn();
   });
 
   it('initializes openAiApiKey from localStorage (or empty string)', () => {
