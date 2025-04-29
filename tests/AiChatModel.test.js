@@ -19,30 +19,12 @@ describe('AiChatModel', () => {
     window.fetch = vi.fn();
   });
 
-  it('initializes openAiApiKey from localStorage (or empty string)', () => {
-    // When nothing in storage, key should be empty
-    expect(model.openAiApiKey.value).toBe('');
-
-    // If storage has a saved key, constructor should pick it up
-    localStorage.openAiApiKey = 'saved-key';
-    const model2 = new AiChatModel();
-    expect(model2.openAiApiKey.value).toBe('saved-key');
-  });
-
-  it('setApiKey updates both the observable and localStorage', () => {
+  it('setApiKey() updates the openAiApiKey', () => {
     model.setApiKey('new-key-123');
     expect(model.openAiApiKey.value).toBe('new-key-123');
-    expect(localStorage.openAiApiKey).toBe('new-key-123');
   });
 
-  it('resetChat empties the messages array', () => {
-    // seed with one message
-    model.messages.value = [{ role: 'user', content: 'hi' }];
-    model.resetChat();
-    expect(model.messages.value).toEqual([]);
-  });
-
-  it('getAnswer appends user+assistant messages and calls fetch with correct payload', async () => {
+  it('getAnswer() appends user & assistant messages and calls fetch with correct request configuration data', async () => {
     // arrange
     model.setApiKey('secret-token');
     const userText = 'Hello, world!';
@@ -79,7 +61,7 @@ describe('AiChatModel', () => {
     ]);
   });
 
-  it('supports multiple getAnswer calls building conversation history', async () => {
+  it('supports multiple getAnswer() calls building conversation history', async () => {
     model.setApiKey('key');
     const responses = [
       { choices: [{ message: { role: 'assistant', content: 'First reply' } }] },
@@ -98,5 +80,37 @@ describe('AiChatModel', () => {
       { role: 'user',      content: 'Q2' },
       { role: 'assistant', content: 'Second reply' }
     ]);
+  });
+
+  it('resetChat() empties the messages array and resets the chat conversation', () => {
+    // seed with one message
+    model.messages.value = [{ role: 'user', content: 'hi' }];
+    model.resetChat();
+    expect(model.messages.value).toEqual([]);
+  });
+
+  it('(bonus) setApiKey() updates localStorage', () => {
+    model.setApiKey('new-key-123');
+    expect(localStorage.openAiApiKey).toBe('new-key-123');
+  });
+
+  it('(bonus) initializes openAiApiKey from saved localStorage', () => {
+    const savedKey = 'saved-key-123';
+    localStorage.setItem('openAiApiKey', savedKey);
+    const m2 = new AiChatModel();
+    expect(m2.openAiApiKey.value).toEqual(savedKey);
+  });
+
+  it('(bonus) syncs message history to localStorage', () => {
+    const savedMessages = [{ role: 'user', content: 'Hello' }];
+    model.messages.value = savedMessages;
+    expect(localStorage.getItem('messages')).toBe(JSON.stringify(savedMessages));
+  });
+
+  it('(bonus) initializes messages from saved localStorage', () => {
+    const savedMessages = [{ role: 'user', content: 'Hello' }];
+    localStorage.setItem('messages', JSON.stringify(savedMessages));
+    const m2 = new AiChatModel();
+    expect(m2.messages.value).toEqual(savedMessages);
   });
 });

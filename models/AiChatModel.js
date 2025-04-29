@@ -46,12 +46,17 @@ class AiChatModel {
 
     constructor() {
         const savedApiKey = localStorage.openAiApiKey ?? '';
+        const savedMessages = localStorage.messages ? JSON.parse(localStorage.messages) : [];
 
-        this.messages = new KWM_Observable([]);
+        this.messages = new KWM_Observable(savedMessages);
         this.openAiApiKey = new KWM_Observable(savedApiKey);
 
         this.openAiApiKey.subscribe((value) => {
             localStorage.openAiApiKey = value; // Sync the API key to local storage
+        });
+
+        this.messages.subscribe((value) => {
+            localStorage.messages = JSON.stringify(value); // Sync the messages to local storage
         });
     }
 

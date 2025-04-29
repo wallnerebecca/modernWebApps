@@ -64,13 +64,7 @@ export default class KWM_Bindings {
 				: uiElement.innerHTML;
 
 		// Bind HTML element attributes & component properties (1-way-data-binding)
-		for (const [
-			x,
-			selector,
-			_y,
-			attributeName,
-			jsCodeExpr,
-		] of uiElementHtmlString.matchAll(this.valueBindRegex)) {
+		for (const [x, selector, _y, attributeName, jsCodeExpr] of uiElementHtmlString.matchAll(this.valueBindRegex)) {
 			uiElement
 				.querySelectorAll(
 					`[${selector.includes(":") ? "\\" : ""}${selector}="${jsCodeExpr}"]`,
@@ -90,18 +84,6 @@ export default class KWM_Bindings {
 						(dependencies?.length > 0
 							? new KWM_Computed(valueFn, dependencies)
 							: valueFn());
-
-					if (elem.matches("[kwm-debug]")) {
-						console.log(
-							`[Bindings Debug]: ${x} 
-- checking for variable name "${variableName}" in "${this.component.constructor.name}"
-- expression "${jsCodeExpr}" resolved to data "${data}" 
-- variable resolved to type of "${typeof data === "object" ? data.constructor.name : typeof data}"
-                        `,
-							this.component,
-							data,
-						);
-					}
 
 					if (
 						elem instanceof KWM_Component &&
@@ -127,13 +109,7 @@ export default class KWM_Bindings {
 		}
 
 		// Bind Listeners
-		for (const [
-			x,
-			selector,
-			_y,
-			listenerType,
-			jsCodeExpr,
-		] of uiElementHtmlString.matchAll(this.listenerBindRegex)) {
+		for (const [x, selector, _y, listenerType, jsCodeExpr] of uiElementHtmlString.matchAll(this.listenerBindRegex)) {
 			uiElement
 				.querySelectorAll(
 					`[${selector.includes("@") ? "\\" : ""}${selector}="${jsCodeExpr}"]`,
@@ -145,17 +121,6 @@ export default class KWM_Bindings {
 							? this.component[listenerFunctionName].bind(this.component)
 							: (event) =>
 									new Function(jsCodeExpr).apply(this.component, [event]);
-
-					if (elem.matches("[kwm-debug]")) {
-						console.log(
-							`[Bindings Debug]: ${x} 
-- checking for function name "${listenerFunctionName}" in "${this.component.constructor.name}"
-- expression "${jsCodeExpr}" resolved to type of ${typeof listenerFunction === "object" ? listenerFunction.constructor.name : typeof listenerFunction}
-                        `,
-							this.component,
-							listenerFunction,
-						);
-					}
 
 					if (listenerFunction !== undefined) {
 						KWM_Bindings.bindSingleEventListener(
@@ -172,13 +137,7 @@ export default class KWM_Bindings {
 		}
 
 		// 2-way Data binding
-		for (const [
-			x,
-			selector,
-			_y,
-			attrName,
-			observableName,
-		] of uiElementHtmlString.matchAll(this.modelBindRegex)) {
+		for (const [x, selector, _y, attrName, observableName] of uiElementHtmlString.matchAll(this.modelBindRegex)) {
 			uiElement
 				.querySelectorAll(
 					`[${selector.includes("$") ? "\\" : ""}${selector}="${observableName}"]`,
@@ -199,9 +158,7 @@ export default class KWM_Bindings {
 		}
 
 		// Element Reference binding
-		for (const [x, selector, variableName] of uiElementHtmlString.matchAll(
-			this.refBindRegex,
-		)) {
+		for (const [x, selector, variableName] of uiElementHtmlString.matchAll(this.refBindRegex)) {
 			uiElement
 				.querySelectorAll(
 					`[${selector.includes("#") ? "\\" : ""}${selector}="${variableName}"]`,
@@ -222,9 +179,7 @@ export default class KWM_Bindings {
 		}
 
 		// Show If Binding
-		for (const [x, selector, jsCodeExpr] of uiElementHtmlString.matchAll(
-			this.showIfBindRegex,
-		)) {
+		for (const [x, selector, jsCodeExpr] of uiElementHtmlString.matchAll(this.showIfBindRegex)) {
 			uiElement
 				.querySelectorAll(
 					`[${selector.includes("?") ? "\\" : ""}${selector}="${jsCodeExpr}"]`,
@@ -245,18 +200,6 @@ export default class KWM_Bindings {
 							? new KWM_Computed(valueFn, dependencies)
 							: valueFn());
 
-					if (elem.matches("[kwm-debug]")) {
-						console.log(
-							`[Bindings Debug]: ${x} 
-- checking for variable name "${variableName}" in "${this.component.constructor.name}"
-- expression "${jsCodeExpr}" resolved to "${data}"
-- variable resolved to type of "${typeof data === "object" ? data.constructor.name : typeof data}"
-                        `,
-							this.component,
-							data,
-						);
-					}
-
 					if (data === undefined) {
 						console.warn(
 							`Bindings Warning: ${x} - Expression "${jsCodeExpr}" resolved to undefined in "${this.component.constructor.name}"`,
@@ -270,7 +213,7 @@ export default class KWM_Bindings {
 	}
 
 	/**
-	 * Get tokens from a js expression
+	 * Get tokens from a js expression e.g. "this.observable.value = 'test'" -> ["this", "observable", "value", "test"]
 	 * @param {string} jsExpression
 	 */
 	static getJsExpressionTokens(jsExpression) {
@@ -329,9 +272,7 @@ export default class KWM_Bindings {
 
 		// If applicable register input listeners to element
 		if (
-			(elem.tagName === "SELECT" ||
-				elem.tagName === "INPUT" ||
-				elem.tagName === "TEXTAREA") &&
+			(elem.tagName === "SELECT" || elem.tagName === "INPUT" || elem.tagName === "TEXTAREA") &&
 			(attribute === "value" || attribute === "checked")
 		) {
 			KWM_Bindings.setSingleInputListener(elem, observable, attribute);
@@ -386,7 +327,7 @@ export default class KWM_Bindings {
 
 	/**
 	 * 1-way-data-binding (UI -> Data).
-	 * Binds the changes of a input element to a observable.
+	 * Binds the changes of a input element to an observable.
 	 * @param {HTMLElement} inputElem
 	 * @param {KWM_Observable} observable
 	 * @param {string} attribute
