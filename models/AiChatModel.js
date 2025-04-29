@@ -45,54 +45,7 @@ import KWM_Observable from '../core/kwm-observable.js';
 class AiChatModel {
 
     constructor() {
-        const savedApiKey = localStorage.openAiApiKey ?? '';
-        const savedMessages = localStorage.messages ? JSON.parse(localStorage.messages) : [];
-
-        this.messages = new KWM_Observable(savedMessages);
-        this.openAiApiKey = new KWM_Observable(savedApiKey);
-
-        this.openAiApiKey.subscribe((value) => {
-            localStorage.openAiApiKey = value; // Sync the API key to local storage
-        });
-
-        this.messages.subscribe((value) => {
-            localStorage.messages = JSON.stringify(value); // Sync the messages to local storage
-        });
+        
     }
 
-    setApiKey(apiKey) {
-        this.openAiApiKey.value = apiKey;
-    }
-
-    resetChat() {
-        this.messages.value = [];
-    }
-
-    async getAnswer(message) {
-        const newUserMessage = {
-            role: 'user',
-            content: message
-        }
-
-        this.messages.value = [...this.messages.value, newUserMessage];
-
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.openAiApiKey.value
-            },
-            body: JSON.stringify({
-                model: 'gpt-4o-mini',
-                messages: this.messages.value
-            })
-        }).then(res => res.json());
-
-        const assistantResponseMessage = response.choices[0].message
-
-        this.messages.value = [...this.messages.value, assistantResponseMessage];
-    }
 }
-
-// Singelton Instance of the Model - only one instance of a model is allowed
-export const aiChatModelInstance = new AiChatModel();

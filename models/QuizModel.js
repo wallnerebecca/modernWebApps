@@ -36,30 +36,6 @@ import KWM_Observable from "../core/kwm-observable.js";
 class QuizModel {
 
     constructor() {
-        const savedCategories = localStorage.categories ? JSON.parse(localStorage.categories) : [];
-
-        this.categories = new KWM_Observable(savedCategories);
-        this.questions = new KWM_Observable([]);
-
-        this.categories.subscribe((categories) => {
-            localStorage.categories = JSON.stringify(categories ?? []); // Sync the categories to local storage
-        });
-
-        this.apiRoot = 'https://open-trivia-api.jkoster.com';
-    }
-
-    async fetchQuestions(category, amount = 1) {
-        const resp = await fetch(this.apiRoot + `/question?limit=${amount}&categories=${category}`).then(res => res.json());
-        this.questions.value = resp;
-    }
-
-    async fetchCategories() {
-        if (!this.categories.value || this.categories.value?.length == 0) {
-            const resp = await fetch(this.apiRoot + '/category').then(res => res.json());
-            this.categories.value = resp;
-        }
+        
     }
 }
-
-// Singelton Instance of the Model - only one instance of the model is allowed
-export const quizModelInstance = new QuizModel()

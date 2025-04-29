@@ -26,8 +26,7 @@ export default class AiChatComponent extends KWM_Component {
     constructor() {
         super();
 
-   }
-
+    }
     
     template() {
         return /*html*/`

@@ -3,13 +3,7 @@ import KWM_Observable from "../core/kwm-observable.js";
 class TodoModel {
 
     constructor() {
-        const savedTodos = localStorage.todos ? JSON.parse(localStorage.todos) : [];
-
         this.todos = new KWM_Observable(savedTodos);
-
-        this.todos.subscribe((todos) => {
-            localStorage.todos = JSON.stringify(todos); // Sync the todos to local storage
-        });
     }
 
     toggleTodo(id){
