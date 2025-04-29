@@ -309,9 +309,12 @@ export default class KWM_Bindings {
 	static setAttribute(elem, value, attribute) {
 		let attributeName = KWM_Bindings.mapping[attribute] ?? attribute;
 
-		if (attributeName === "value" && elem.type === "checkbox") {
-			attributeName = "checked";
-		}
+		if (attributeName === 'value' && (elem.type === 'checkbox' || elem.type === 'radio')) {
+            attributeName = 'checked';
+        } else if (attributeName in KWM_Bindings.attributesToRemoveOnFalsy && !value) {
+            elem.removeAttribute(attributeName);
+            return;
+        }
 
 		elem[attributeName] = value;
 	}
@@ -324,6 +327,8 @@ export default class KWM_Bindings {
 		innerhtml: "innerHTML",
 		"inner-html": "innerHTML",
 	};
+
+	static attributesToRemoveOnFalsy = ['disabled', 'hidden', 'readonly', 'required', 'checked'];
 
 	/**
 	 * 1-way-data-binding (UI -> Data).
