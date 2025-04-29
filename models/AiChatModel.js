@@ -9,7 +9,7 @@ import KWM_Observable from '../core/kwm-observable.js';
 //     "Authorization": "Bearer ApiKeyGoesHere"
 // },
 // body: '{
-//     "model": "gpt-3.5-turbo",
+//     "model": "gpt-4o-mini",
 //     "messages": [{
 //          "role":"user",
 //          "content":"The message content goes here..."
@@ -22,7 +22,7 @@ import KWM_Observable from '../core/kwm-observable.js';
 //     "id": "chatcmpl-8sH70IAhiID98Th5qEWN64K4GiVzJ",
 //     "object": "chat.completion",
 //     "created": 1707946182,
-//     "model": "gpt-3.5-turbo-0613",
+//     "model": "gpt-4o-mini",
 //     "choices": [
 //       {
 //         "index": 0,
@@ -78,7 +78,7 @@ class AiChatModel {
                 'Authorization': 'Bearer ' + this.openAiApiKey.value
             },
             body: JSON.stringify({
-                model: 'gpt-3.5-turbo',
+                model: 'gpt-4o-mini',
                 messages: this.messages.value
             })
         }).then(res => res.json());
