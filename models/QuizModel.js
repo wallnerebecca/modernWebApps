@@ -39,3 +39,7 @@ class QuizModel {
         
     }
 }
+
+// Singelton Instance of the Model - only one instance of the model is allowed
+export const quizModelInstance = new QuizModel()
+
