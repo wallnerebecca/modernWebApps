@@ -2,8 +2,6 @@
 import KWM_Component from '../core/kwm-component.js';
 import KWM_Observable from '../core/kwm-observable.js';
 
-import { aiChatModelInstance } from '../models/AiChatModel.js';
-
 // --- Example for messages from OpenAI ---
 // [
 //     {
