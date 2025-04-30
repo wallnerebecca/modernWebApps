@@ -40,20 +40,11 @@ const myRouter = new KWM_Router({
           : KWM_Router.redirect("/404"),
     }),
     new KWM_Route({
-        slug: '/quiz',
-        name: 'Quiz 🧠',
-        component: new QuizComponent()
-    }),
-    new KWM_Route({
-        slug: '/chat',
-        name: 'AI Chat 🤖',
-        component: new AiChatComponent()
-    }),
-    new KWM_Route({
       slug: "/404",
       name: "Not Found",
       component: new NotFoundComponent(),
     }),
+    
   ],
   slugHome: "/",
   slugNotFound: "/404",
