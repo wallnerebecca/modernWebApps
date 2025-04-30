@@ -2,8 +2,6 @@
 import KWM_Component from '../core/kwm-component.js';
 import KWM_Observable from '../core/kwm-observable.js';
 
-import { quizModelInstance } from '../models/QuizModel.js';
-
 /**
  * Quiz Component
  * 
