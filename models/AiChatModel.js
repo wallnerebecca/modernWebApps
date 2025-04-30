@@ -49,3 +49,7 @@ class AiChatModel {
     }
 
 }
+
+// Singelton Instance of the Model - only one instance of a model is allowed
+export const aiChatModelInstance = new AiChatModel();
+
