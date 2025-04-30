@@ -3,7 +3,7 @@ import KWM_Observable from "../core/kwm-observable.js";
 class TodoModel {
 
     constructor() {
-        this.todos = new KWM_Observable(savedTodos);
+        this.todos = new KWM_Observable([]);
     }
 
     toggleTodo(id){
