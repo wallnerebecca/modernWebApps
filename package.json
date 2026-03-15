@@ -6,6 +6,9 @@
     "vite": "^8.0.0",
     "vitest": "^4.1.0"
   },
+  "dependencies": {
+    "@mistralai/mistralai": "^1.15.1"
+  },
   "scripts": {
     "test:browser": "vitest --config=vitest.browser.config.js"
   }

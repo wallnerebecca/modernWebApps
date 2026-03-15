@@ -8,6 +8,8 @@ import {AboutComponent} from "./components/AboutComponent.js";
 import {TodoComponent} from "./components/TodoComponent.js";
 import {Router} from './kwm-js';
 import {BlogComponent} from "./components/BlogComponent.js";
+import {AiChatComponent} from "./components/AiChatComponent.js";
+import {QuizComponent} from "./components/QuizComponent.js";
 
 new Router(
     document.getElementById("kwmJS"),
