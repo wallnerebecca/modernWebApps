@@ -1,89 +1,94 @@
-"use strict";
-import KWM_Component from '../core/kwm-component.js';
-import KWM_Computed from '../core/kwm-computed.js';
-import KWM_Observable from '../core/kwm-observable.js';
-import { todoModelInstance } from '../models/TodoModel.js';
+import {Component, html, observable, on} from "../kwm-js";
 
-export default class TodoComponent extends KWM_Component {
-    constructor() {
-        super();
-
-        this.todos = todoModelInstance.todos;
-        this.newTodoText = new KWM_Observable('');
-
-        this.openTodos = new KWM_Computed(() => {
-            return this.todos.value.filter(todo => !todo.completed);
-        }, [this.todos]);
-
-        this.closedTodos = new KWM_Computed(() => {
-            return this.todos.value.filter(todo => todo.completed);
-        }, [this.todos]);
-
-        this.todos.subscribe(() => this.render());
-    }
+export class TodoComponent extends Component {
+    todos = observable([
+        { id: 1, text: "Learn KWM-JS", done: true },
+        { id: 2, text: "Build something cool", done: false },
+        { id: 3, text: "Ship it", done: false },
+    ]);
+    input = observable("");
 
     addTodo() {
-        if (this.newTodoText.value.trim() !== '') {
-            todoModelInstance.addTodo(this.newTodoText.value);
-        }
-        this.newTodoText.value = '';
+        const newTodo = {
+            id: Date.now(),
+            done: false,
+            text: this.input.get(),
+        };
+
+        const updatedTodos = [...this.todos.get(), newTodo];
+        this.todos.set(updatedTodos);
+        this.input.set("");
     }
 
-    removeTodo(todoId) {
-        todoModelInstance.removeTodo(todoId);
+    removeTodo(index) {
+        const updatedTodos = this.todos.get().filter((todo, idx) => idx !== index);
+        this.todos.set(updatedTodos);
     }
 
-    toggleTodo(todoId) {
-        todoModelInstance.toggleTodo(todoId);
+    toggleTodo(index) {
+        const updatedTodos = this.todos.get().map((todo, idx) => {
+            if (idx === index) {
+                return { ...todo, done: !todo.done };
+            }
+            return todo;
+        });
+
+        this.todos.set(updatedTodos);
     }
 
-    template() {
-        return `
-            <div>
-                <h2>Todo List</h2>
+    clearDone() {
+        const updatedTodos = this.todos.get().filter((todo) => !todo.done);
+        this.todos.set(updatedTodos);
+    }
 
-                <label for="newTodoText">New todo</label>
-                <div class="input-group">
-                    <input kwm-model-value="this.newTodoText" id="newTodoText" placeholder="New todo text" type="text" />
-                    <button kwm-listen-click="this.addTodo()">Add Todo</button>
+    render() {
+
+        const remainingTodos = this.todos.get().filter((todo) => !todo.done).length;
+
+        return html`
+            <div class="todo-app">
+                <h2 class="todo-app__title">Todo List</h2>
+                <div class="todo-input">
+                    <input
+                        type="text"
+                        placeholder="What needs to be done?"
+                        value="${this.input.get()}"
+                        ${on('input', (e) => this.input.set(e.target.value))}
+                    />
+                    <button
+                        class="todo-add-btn"
+                        ${on('click', () => this.addTodo())}
+                    >Add</button>
                 </div>
-                <h3>Open Todos (${this.openTodos.value?.length})</h3>
-                <ul>
-                    ${this.openTodos.value.map(todo => `
-                        <li>
-                            <input id="todo-${todo.id}" kwm-listen-click="this.toggleTodo(${todo.id})" type="checkbox" ${todo.completed ? 'checked' : '' } />
-                            <span class="${todo.completed ? 'completed' : ''}">
-                                ${todo.text}
-                            </span>
-                            <button class="bg-red" kwm-listen-click="this.removeTodo(${todo.id})" aria-label="Remove Todo" title="Remove Todo">
-                                <img src="delete-icon.svg" width="16" height="16" />
-                            </button>
+                
+                <ul class="todo-list">
+                    
+                    ${this.todos.get().map((todo, idx) => html`
+                        <li class="todo-item ${todo.done ? 'done' : ''}">
+                            <input
+                                class="todo-checkbox"
+                                type="checkbox"
+                                ${todo.done ? 'checked' : ''}
+                                ${on('change', () => this.toggleTodo(idx))}
+                            />
+                            <span class="todo-text">${todo.text}</span>
+                            <button 
+                                class="todo-remove-btn" 
+                                title="Remove"
+                                ${on('click', () => this.removeTodo(idx))}
+                            >×</button>
                         </li>
-                    `).join('')}
-
-                    </ul>
-                ${this.openTodos.value?.length == 0 ? '<div>No open todos</div>': ''}
-
-                <h3>Closed Todos (${this.closedTodos.value?.length})</h3>
-                <ul>
-                    ${this.closedTodos.value.map(todo => `
-                        <li>
-                            <input id="todo-${todo.id}" 
-                                kwm-listen-click="this.toggleTodo(${todo.id})" 
-                                type="checkbox" 
-                                ${todo.completed ? 'checked' : '' } />
-                            <span class="${todo.completed ? 'completed' : ''}">
-                                ${todo.text}
-                            </span>
-                            <button class="bg-red" kwm-listen-click="this.removeTodo(${todo.id})" aria-label="Remove Todo" title="Remove Todo">
-                                <img src="delete-icon.svg" width="16" height="16" />
-                            </button>
-                        </li>
-                    `).join('')}
-
-                    </ul>
-                    ${this.closedTodos.value?.length == 0 ? '<div>No closed todos</div>': ''}
-
+                    `)}
+                    
+                </ul>
+                <div class="todo-footer">
+                    <span class="todo-count">${remainingTodos} remaining</span>
+                    <button
+                        class="todo-clear-btn"
+                        ${on('click', () => this.clearDone())}
+                    >Clear done
+                    </button>
+                </div>
             </div>
         `;
     }

@@ -6,3 +6,5 @@ node_modules/
 # Exclude IDE Folders
 .idea/
 .vscode/
+.vite/
+CLAUDE.md

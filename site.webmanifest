@@ -1,7 +1,7 @@
 {
-  "name": "kwmJS 1.0.0",
-  "short_name": "kwmJS",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+    "name": "kwmJS 1.0.0",
+    "short_name": "kwmJS",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
 }

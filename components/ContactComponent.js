@@ -1,28 +1,34 @@
-"use strict";
+'use strict';
 
-import KWM_Component from "../core/kwm-component.js";
+import {Component, html} from '../kwm-js';
 
-export default class ContactComponent extends KWM_Component {
-  constructor() {
-    super();
-    this.text =
-      "We are the hottest 🔥 company in the world. Contact us and become part of the team!";
-  }
+/**
+ * This is the page home component and will be rendered when the user navigates to the '/' home route.
+ *
+ * You need to create the base class 'Component' first before using me!
+ **/
+export class ContactComponent extends Component {
+    // Any component data goes here in the constructor
+    text = 'Contact me 📨';
 
-  template() {
-    return /*html*/ `
+    // render function -> defines shape of the component
+    render() {
+        return html`
         <section id="main_content">
-            <h1>📨 Contact</h1>
-            <p>${this.text}</p>
+            <h1>${this.text}</h1>
+            <p>This is the contact page.</p>
             <address>
-                <a href="https://jakobosterberger.com/">Website</a>
-                <a href="https://github.com/jk-oster">GitHub</a>
-                <a href="https://www.linkedin.com/in/jakob.osterberger/">LinkedIn</a>
-                <a href="https://www.instagram.com/jakobosterberger/">Instagram</a>
+                <p>Jane Doe</p>
+                <p>123 Main Street</p>
+                <p>Cityville, Country</p>
+                <p>Email: <a href="mailto:jane@doe.com">Jane Doe</a></p>
             </address>
+            <p><a href="#/home">Go Home!</a></p>
         </section>
         `;
-  }
+    }
 }
 
-customElements.define("contact-component", ContactComponent);
+// usage in HTML like: <home-component></home-component>
+// usage in JS like: const homeComponent = new HomeComponent();
+customElements.define('contact-component', ContactComponent);

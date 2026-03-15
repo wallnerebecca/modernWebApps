@@ -1,79 +1,78 @@
 /* Main Layout & Colors 🎨 - Adjust Colors to your liking*/
 
 :root {
-  --kwmjs-accent: #8147a7;
-  --kwmjs-white: #f8f8f8;
-  --kwmjs-black: #1c1c1c;
-  --kwmjs-blue: #4757a7;
+    --kwmjs-accent: #8147a7;
+    --kwmjs-white: #f8f8f8;
+    --kwmjs-black: #1c1c1c;
+    --kwmjs-blue: #4757a7;
 }
 
 #kwmJS {
-  padding: 20px 50px;
+    padding: 20px 50px;
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  font-family: sans-serif;
-  color: var(--kwmjs-black);
-  background-color: var(--kwmjs-white);
-  max-width: 100vw;
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    color: var(--kwmjs-black);
+    background-color: var(--kwmjs-white);
 }
 
 button {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 /* Nav */
 header ul {
-  margin: 0;
-  display: flex;
-  height: 80px;
-  background-color: var(--kwmjs-accent);
-  list-style-type: none;
-  padding-right: 70px;
+    margin: 0;
+    display: flex;
+    height: 80px;
+    background-color: var(--kwmjs-accent);
+    list-style-type: none;
+    padding-right: 70px;
 }
 
 header ul li {
-  height: 80px;
-  line-height: 80px;
-  cursor: pointer;
+    height: 80px;
+    line-height: 80px;
+    cursor: pointer;
 }
 
 header ul li a {
-  height: 80px;
-  text-decoration: none;
-  color: var(--kwmjs-white);
-  padding: 0 20px;
-  display: block;
+    height: 80px;
+    text-decoration: none;
+    color: var(--kwmjs-white);
+    padding: 0 20px;
+    display: block;
 }
 
 header ul li .active {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 header ul li:hover {
-  background-color: var(--kwmjs-white);
+    background-color: var(--kwmjs-white);
 }
 
 header ul li:hover a {
-  text-decoration: none;
-  color: var(--kwmjs-black);
+    text-decoration: none;
+    color: var(--kwmjs-black);
 }
 
 /* Footer */
 
 footer {
-  height: 80px;
-  background-color: var(--kwmjs-blue);
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  line-height: 80px;
-  color: var(--kwmjs-white);
+    height: 80px;
+    background-color: var(--kwmjs-blue);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 80px;
+    color: var(--kwmjs-white);
 }
 
 footer p {
-  margin: 0;
+    margin: 0;
 }
