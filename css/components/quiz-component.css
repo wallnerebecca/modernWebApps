@@ -691,6 +691,7 @@
 .quiz-score-stat {
     display: flex;
     flex-direction: column;
+    min-width: 3rem;
     align-items: center;
     gap: 0.15rem;
     padding: 0.6rem 1.25rem;
