@@ -80,15 +80,6 @@ export class QuizComponent extends Component {
          let tOrC = "";
          tOrC = is_Correct ? "✔️" : "❌";
          return tOrC;
-         /*if(is_Correct){
-             return html`
-                 ✔️
-                 
-             `
-         }
-         else {
-             return html`❌`
-         }*/
     }
     progressDots(){
         let dotDiv = "";
