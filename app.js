@@ -8,18 +8,18 @@ import {AboutComponent} from "./components/AboutComponent.js";
 import {TodoComponent} from "./components/TodoComponent.js";
 import {Router} from './kwm-js';
 import {BlogComponent} from "./components/BlogComponent.js";
+import {NavigationComponent} from "./components/NavigationComponent.js";
 import {AiChatComponent} from "./components/AiChatComponent.js";
 import {QuizComponent} from "./components/QuizComponent.js";
+import{routes} from "./routes.js";
+import {QuizModel} from "./models/QuizModel.js";
 
 new Router(
     document.getElementById("kwmJS"),
-    [
-        { path: "/", name: "Home", component: new HomeComponent() },
-        { path: "/about", name: "About", component: new AboutComponent() },
-        { path: "/contact", name: "Contact", component: new ContactComponent() },
-        { path: "/todo", name: "Todo", component: new TodoComponent() },
-        { path: "/blog", name: "Blog", component: new BlogComponent()}
-    ],
+    routes,
 );
+
+const quiz = new QuizModel();
+window.quiz =quiz;
 
 // Navigating / loading to the home page should display the Hero-Teaser & Product-Cards similar like in the example picture

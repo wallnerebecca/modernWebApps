@@ -1,5 +1,11 @@
 /* ── Quiz Component ─────────────────────────────────────────────── */
 
+.ibm-plex-mono-regular {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+
 @keyframes qz-fade-up {
     from {
         opacity: 0;

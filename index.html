@@ -6,20 +6,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="app.css"/>
     <title>kwmJS v1.0.0</title>
 </head>
 <body>
 <header>
-    <nav id="kwmJS-navigation">
-        <ul>
-            <li><a href="#/">Home</a></li>
-            <li><a href="#/contact">Contact</a></li>
-            <li><a href="#/about">About</a></li>
-            <li><a href="#/todo">Todo</a></li>
-            <li><a href="#/blog">Blog</a></li>
-        </ul>
-    </nav>
+    <navigation-component></navigation-component>
 </header>
 <main id="kwmJS">
     <!-- this is the container element in which our SPA will be rendered -->
