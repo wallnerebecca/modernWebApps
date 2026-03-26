@@ -126,15 +126,14 @@ export class QuizComponent extends Component {
                                                     (this.numberOfQuestions.get()-1) < 1 ? 1 : (this.numberOfQuestions.get()-1)))}
                                                 class="quiz-count-btn">
                                             -
-                                        </button>
-                                        <div class="quiz-count-input">
-                                            <input
-                                                    type="text"
-                                                    value="${this.numberOfQuestions.get()}"
-                                                    ${on('input',(e) => this.numberOfQuestions.set(
-                                                        e.target.value > 25 ? 25 : (e.target.value < 1 ? 1 : e.target.value)))}
-                                            />
-                                        </div>
+                                        </button>                                        
+                                        <input
+                                                class="quiz-count-input"
+                                                type="text"
+                                                value="${this.numberOfQuestions.get()}"
+                                                ${on('input',(e) => this.numberOfQuestions.set(
+                                                    e.target.value > 25 ? 25 : (e.target.value < 1 ? 1 : e.target.value)))}
+                                        />                                        
                                         <button
                                                 ${on('click', () => this.numberOfQuestions.set(
                                                         (this.numberOfQuestions.get() +1) > 25 ? 25: (this.numberOfQuestions.get() +1)))}
