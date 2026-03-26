@@ -130,9 +130,9 @@ export class QuizComponent extends Component {
                                         <input
                                                 class="quiz-count-input"
                                                 type="text"
-                                                value="${this.numberOfQuestions.get()}"
+                                                value="${Number(this.numberOfQuestions.get())}"
                                                 ${on('input',(e) => this.numberOfQuestions.set(
-                                                    e.target.value > 25 ? 25 : (e.target.value < 1 ? 1 : e.target.value)))}
+                                                    Number(e.target.value) > 25 ? 25 : (Number(e.target.value) < 1 ? 1 : Number(e.target.value))))}
                                         />                                        
                                         <button
                                                 ${on('click', () => this.numberOfQuestions.set(
